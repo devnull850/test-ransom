@@ -69,7 +69,10 @@ int main(void) {
             exit(EXIT_FAILURE);
         }
 
-        fwrite(buf, 1, size, fd);
+        if (fwrite(buf, 1, size, fd) < size) {
+            fprintf(stderr, "error writing to file [%s]\n", filename);
+            exit(EXIT_FAILURE);
+        }
 
         if (fclose(fd) == EOF) {
             fprintf(stderr, "error closing file [%s]\n", filename);
